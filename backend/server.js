@@ -1,6 +1,6 @@
 
 
 const server = async () => {
-    console.log("Server is running...");
+    console.log("Server is running");
 };
 server();
