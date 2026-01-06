@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import connect from "./src/db/connect.js";
 
 dotenv.config();    
 
@@ -20,6 +21,7 @@ app;
 
 const server = async () => {
     try {
+        await connect();
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
         });
