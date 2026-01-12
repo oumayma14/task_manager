@@ -9,7 +9,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     //validation
     if (!name || !email || !password) {
         //400 bad request
-        res.status(400).json({ message: "All fields are required" });
+        res.status(400).json({ message: "All fields are required!" });
     }
     //password length check
     if (password.length < 6) {
