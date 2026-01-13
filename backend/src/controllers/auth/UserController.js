@@ -14,7 +14,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     //password length check
     if (password.length < 6) {
         res.status(400)
-        .json({ message: "Password must be at least 6 characters long" });
+        .json({ message: "Password must be at least 6 characters long..." });
     }
 
     //check user existence
