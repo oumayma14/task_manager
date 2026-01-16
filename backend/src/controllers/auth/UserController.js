@@ -53,7 +53,7 @@ export const registerUser = asyncHandler(async (req, res) => {
             token,
         });
     } else {
-        res.status(400).json({ message: "Invalid user data" });
+        res.status(400).json({ message: "Invalid user data..." });
     }
 });
 
