@@ -62,7 +62,7 @@ export const loginUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     //validation
     if (!email || !password) {
-        res.status(400).json({ message: "All fields are required" });
+        res.status(400).json({ message: "All fields are required..." });
     }
     //check user existence
     const userExists = await User.findOne({ email });
