@@ -9,10 +9,13 @@ export const protect = expressAsyncHandler(async (req, res, next) => {
         if(!token){
             //401 unauthorized
             res.status(401).json({message:"Not authorized, no token"});}
+
         //verify token
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
         //get user details from token without password
         const user = await User.findById(decoded.id).select("-password");
+
         //check if user exists
         if(!user){
             res.status(401).json({message:"User not found!!!"});}
