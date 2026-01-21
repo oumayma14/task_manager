@@ -26,3 +26,14 @@ export const protect = expressAsyncHandler(async (req, res, next) => {
         res.status(401).json({message:"Not authorized, token failed"});
     }
 });
+
+//admin middleware
+export const adminMiddleware= expressAsyncHandler(async(req,res,next)=>{
+    if (req.user && req.user.role ==="admin"){
+        //if user is admin , move to the next middleware
+        next();
+        return;
+    }
+    //if not admin , send 403 forbidden 
+    res.status(403).json({message:"Only admin can do this function"});
+});
