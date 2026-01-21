@@ -37,3 +37,25 @@ export const adminMiddleware= expressAsyncHandler(async(req,res,next)=>{
     //if not admin , send 403 forbidden 
     res.status(403).json({message:"Only admin can do this function"});
 });
+
+//this middleware checks the user's role
+export const creatorMiddleware= expressAsyncHandler(async(req,res,next)=>{
+    if ((req.user && req.user.role ==="creator") || (req.user && req.user.role ==="admin")){
+        //if user is creator , move to the next middleware
+        next();
+        return;
+    }
+    //if not creator , send 403 forbidden
+    res.status(403).json({message:"Only creator can do this function"});
+});
+
+//verified user middleware
+export const verifiedMiddleware= expressAsyncHandler(async(req,res,next)=>{
+    if(req.user && req.user.isVerified){
+        //if user is verified , move to the next middleware
+        next();
+        return;
+    }
+    //if not verified , send 403 forbidden
+    res.status(403).json({message:"Only verified users can do this function"});
+});
