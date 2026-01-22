@@ -26,6 +26,6 @@ export const getAllUsers= expressAsyncHandler(async(req,res) =>{
     }
     res.status(200).json(users);} 
     catch(error){
-        res.status(500).json({message:"Cannot get users"});
+        res.status(500).json({message:"Cannot get users!"});
     }
 })
