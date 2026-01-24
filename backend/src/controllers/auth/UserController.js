@@ -3,6 +3,9 @@ import User from '../../models/auth/UserModel.js';
 import generateToken from '../../helpers/generateToken.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import expressAsyncHandler from 'express-async-handler';
+import Token from '../../models/auth/Token.js';
+import crypto from 'node:crypto';
 
 // regiter user controller
 export const registerUser = asyncHandler(async (req, res) => {
@@ -157,4 +160,29 @@ export const userLoginStatus = asyncHandler(async(req,res)=>{
     } else {
         return res.status(401).json(false);
     }
-})
+});
+
+//email verification
+export const verifyEmail =expressAsyncHandler(async(req,res)=>{
+    const user = await User.findById(req.user._id);
+    //if user is not  found
+    if(!user){
+        res.status(404).json({message:"user not found"});
+    }
+
+    //check if user is already verified or no
+    if(user.isVerified){
+        res.status(400).json({message: "user is already verified"})}
+    
+    let token = await Token.findOne({userId: user._id});
+    //if token exists --> update the token 
+    if(token){
+        await token.deleteOne();
+    }
+
+    //create a verficiation token using the user id --> using crypto
+    const verficiationToken=crypto.randomBytes(64).toString("hex");  user._id;
+
+    //hash the verificationtoken 
+    const hashedToken = await hashToken();
+});
