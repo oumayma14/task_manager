@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import expressAsyncHandler from 'express-async-handler';
 import Token from '../../models/auth/Token.js';
 import crypto from 'node:crypto';
+import hashToken from '../../helpers/hashToken.js';
 
 // regiter user controller
 export const registerUser = asyncHandler(async (req, res) => {
@@ -181,8 +182,18 @@ export const verifyEmail =expressAsyncHandler(async(req,res)=>{
     }
 
     //create a verficiation token using the user id --> using crypto
-    const verficiationToken=crypto.randomBytes(64).toString("hex");  user._id;
+    const verificationToken=crypto.randomBytes(64).toString("hex");  user._id;
 
     //hash the verificationtoken 
-    const hashedToken = await hashToken();
+    const hashedToken = await hashToken(verificationToken);
+
+    await new Token({
+        userId: user._id,
+        verificationToken: hashedToken,
+        createdAt: Date.now(),
+        expiresAt: Date.now() + 24*60*60*1000, //24 hours
+    }).save();
+
+    //verification url
+    const verificationUrl= `${process.env.CLIENT_URL}/verify-email/${verificationToken}`;
 });
