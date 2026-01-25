@@ -196,4 +196,13 @@ export const verifyEmail =expressAsyncHandler(async(req,res)=>{
 
     //verification url
     const verificationUrl= `${process.env.CLIENT_URL}/verify-email/${verificationToken}`;
+
+    //send email
+    const subject = "Email verification - AuthKit";
+    const send_to = user.email;
+    const reply_to = "noreply@gmail.com";
+    const template = "emailVerification";
+    const send_from=process.env.USER_EMAIL;
+    const name = user.name;
+    const url= link;
 });
