@@ -153,7 +153,7 @@ export const updateUser = asyncHandler(async (req, res) => {
 export const userLoginStatus = asyncHandler(async(req,res)=>{
     const token=req.cookies.token;
     if(!token){
-        return res.status(401).json({message:"Not authorized, please login!"});
+        return res.status(401).json({message:"Not authorized, please login!!"});
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if(decoded){
