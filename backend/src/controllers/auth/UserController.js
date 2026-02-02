@@ -168,7 +168,7 @@ export const verifyEmail =expressAsyncHandler(async(req,res)=>{
     const user = await User.findById(req.user._id);
     //if user is not  found
     if(!user){
-        res.status(404).json({message:"user not found!"});
+        res.status(404).json({message:"user not found!!"});
     }
 
     //check if user is already verified or no
